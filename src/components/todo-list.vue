@@ -24,52 +24,66 @@
   </div>
 </template>
 
-<script>
-  import TodoItem from '@/components/todo-item';
+<script lang='ts'>
+import TodoItem from './todo-item.vue'
+import { Component, Vue } from 'vue-property-decorator'
+import { Todo, TodoStatusCode } from "@/models/todo"
 
-  export default {
-    components: {
-      TodoItem,
-    },
-    data: function () {
-      return {
-        todos: [{
-          id: 1,
-          title: 'Todo Title #1',
-          isCompleted: true,
-          isDeleted: false,
-          isRunning: false,
-        }, {
-          id: 2,
-          title: 'Todo Title #2',
-          isCompleted: false,
-          isDeleted: false,
-          isRunning: false
-        }, {
-          id: 3,
-          title: 'Todo Title #3',
-          isCompleted: false,
-          isDeleted: false,
-          isRunning: true,
-        }]
-      };
-    },
-    methods: {
-      isCompleted: (todo)=> {
-        return todo.isCompleted && !todo.isRunning;
-      },
-      isRunning: (todo) => {
-        return !todo.isCompleted && todo.isRunning;
-      },
-      isNotCompleted: (todo) => {
-        return !todo.isCompleted && !todo.isRunning;
-      },
-      onTodoStatusChanged: (status, id) => {
-        alert(status + id);
-        const idx = this.todos.findIndex(f => f.id == id);
+@Component({
+  components: {
+    TodoItem
+  }
+})
+export default class TodoList extends Vue {
+  todos: Todo[] = [
+    {
+      id: 1,
+      title: 'Title #1',
+      duration: 15,
+      status: TodoStatusCode.Completed
+    }, {
+      id: 2,
+      title: 'Title #2',
+      duration: 0,
+      status: TodoStatusCode.InCompleted
+    }, {
+      id: 3,
+      title: 'Title #3',
+      duration: 0,
+      status: TodoStatusCode.Paused
+    }, {
+      id: 4,
+      title: 'Title #4',
+      duration: 0,
+      status: TodoStatusCode.Started
+    }
+  ];
+
+  isCompleted = (todo: Todo) => {
+    return todo.status == TodoStatusCode.Completed;
+  }
+  isRunning = (todo: Todo) => {
+    return todo.status == TodoStatusCode.Started;
+  }
+  isNotCompleted = (todo: Todo) => {
+    return todo.status == TodoStatusCode.InCompleted || todo.status == TodoStatusCode.Paused;
+  }
+
+  onTodoStatusChanged = (status: TodoStatusCode, id: number) => {
+    // pause all running tasks
+    if (status == TodoStatusCode.Started) {
+      let idx = this.todos.findIndex(f => f.status == TodoStatusCode.Started);
+      if (idx != -1) {
+        this.todos[idx].status = TodoStatusCode.Paused;
       }
     }
+
+    let idx = this.todos.findIndex(f => f.id == id);
+    if (idx != -1) {
+      this.todos[idx].status = status;
+    }
   }
+}
 </script>
 
 <style lang="css">
