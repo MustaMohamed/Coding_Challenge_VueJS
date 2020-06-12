@@ -27,7 +27,7 @@
 <script lang='ts'>
 import TodoItem from './todo-item.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import { Todo, TodoStatusCode } from "@/models/todo"
+import { Todo, TodoStatusCode } from "../models/todo"
 
 @Component({
   components: {

@@ -1,24 +1,24 @@
 <template lang="html">
-  <v-card :class="{'todo-card': true, running: this.isStarted(), completed: this.isCompleted(), paused: this.isPaused()}">
+  <v-card :class="{'todo-card': true, running: this.isStarted, completed: this.isCompleted, paused: this.isPaused}">
     <v-card-title primary-title>
       <div class='d-flex justify-content-between w-100'>
-        <h3 :class="{'headline mb-0': true, completed: this.isCompleted()}">{{ todo.title }}</h3>
+        <h3 :class="{'headline mb-0': true, completed: this.isCompleted}">{{ todo.title }}</h3>
         <div class='todo-actions'>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
               <v-icon
-                :color="isCompleted() ? 'blue': ''"
+                :color="isCompleted ? 'blue': ''"
                 v-bind="attrs"
                 v-on="on"
                 @click="toggleCompletedTodo">
                 check
               </v-icon>
             </template>
-            <span>{{ !isCompleted() ? 'Mark as completed' : 'Mark as uncompleted' }}</span>
+            <span>{{ !isCompleted ? 'Mark as completed' : 'Mark as uncompleted' }}</span>
           </v-tooltip>
           <v-tooltip
             top
-            v-if="!this.isStarted() && !this.isCompleted()"
+            v-if="!this.isStarted && !this.isCompleted"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-icon
@@ -33,7 +33,7 @@
           </v-tooltip>
           <v-tooltip
             top
-            v-if="this.isStarted()"
+            v-if="this.isStarted"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-icon
@@ -62,7 +62,7 @@
       <div>
         <v-chip
           class="ma-2"
-          :color="getCardStatusColor()"
+          :color="this.cardStatusColor"
           text-color="white"
           small
           label
@@ -88,23 +88,23 @@ import { VChip, VTooltip } from 'vuetify/lib';
 export default class TodoItem extends Vue {
   @Prop() todo!: Todo;
 
-  isCompleted() {
+  get isCompleted() {
     return this.todo.status == TodoStatusCode.Completed;
   }
 
-  isIncompleted() {
+  get isIncompleted() {
     return this.todo.status == TodoStatusCode.InCompleted;
   }
 
-  isStarted() {
+  get isStarted() {
     return this.todo.status == TodoStatusCode.Started;
   }
 
-  isPaused() {
+  get isPaused() {
     return this.todo.status == TodoStatusCode.Paused;
   }
 
-  getCardStatusColor(): string {
+  get cardStatusColor(): string {
     switch (this.todo.status) {
       case TodoStatusCode.Completed:
         return '#0984e3';
@@ -123,6 +123,7 @@ export default class TodoItem extends Vue {
     this.todo.status == TodoStatusCode.Completed ?
       this.markAsNotCompletedTodo() : this.markAsCompletedTodo();
   }
+
   markAsCompletedTodo() {
     const status = TodoStatusCode.Completed;
     this.$emit('onTodoStatusChanged', status, this.todo.id);
@@ -160,6 +161,7 @@ export default class TodoItem extends Vue {
     &.running {
       border-left: 5px solid @cardRunningBorderColor !important;
     }
+
     &.paused {
       border-left: 5px solid @cardPausedBorderColor !important;
     }
