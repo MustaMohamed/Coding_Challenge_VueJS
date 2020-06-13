@@ -51,6 +51,7 @@
               <v-icon
                 color="red"
                 v-bind="attrs"
+                @click="markAsDeletedTodo"
                 v-on="on">
                 delete_forever
               </v-icon>
@@ -126,22 +127,27 @@ export default class TodoItem extends Vue {
 
   markAsCompletedTodo() {
     const status = TodoStatusCode.Completed;
-    this.$emit('onTodoStatusChanged', status, this.todo.id);
+    this.$emit('onTodoStatusChanged', this.todo, status);
   }
 
   markAsNotCompletedTodo() {
     const status = TodoStatusCode.InCompleted;
-    this.$emit('onTodoStatusChanged', status, this.todo.id);
+    this.$emit('onTodoStatusChanged', this.todo, status);
   }
 
   markAsRunningTodo() {
     const status = TodoStatusCode.Started;
-    this.$emit('onTodoStatusChanged', status, this.todo.id);
+    this.$emit('onTodoStatusChanged', this.todo, status);
   }
 
   markAsNotRunningTodo() {
     const status = TodoStatusCode.Paused;
-    this.$emit('onTodoStatusChanged', status, this.todo.id);
+    this.$emit('onTodoStatusChanged', this.todo, status);
+  }
+
+  markAsDeletedTodo() {
+    const status = TodoStatusCode.Deleted;
+    this.$emit('onTodoStatusChanged', this.todo, status);
   }
 }
 </script>

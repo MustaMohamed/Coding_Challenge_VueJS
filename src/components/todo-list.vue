@@ -35,37 +35,17 @@
 import TodoItem from './todo-item.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { Todo, TodoStatusCode } from '@/models'
+import { mapActions } from 'vuex';
 
 @Component({
   components: {
     TodoItem
+  },
+  methods: {
+    ...mapActions(['changeTodoStatus'])
   }
 })
 export default class TodoList extends Vue {
-  todos: Todo[] = [
-    {
-      id: 1,
-      title: 'Title #1',
-      duration: 15,
-      status: TodoStatusCode.Completed
-    }, {
-      id: 2,
-      title: 'Title #2',
-      duration: 0,
-      status: TodoStatusCode.InCompleted
-    }, {
-      id: 3,
-      title: 'Title #3',
-      duration: 0,
-      status: TodoStatusCode.Paused
-    }, {
-      id: 4,
-      title: 'Title #4',
-      duration: 0,
-      status: TodoStatusCode.Started
-    }
-  ];
-
   get completed() {
     return this.$store.getters.completedTodos;
   }
@@ -82,19 +62,8 @@ export default class TodoList extends Vue {
     return this.$store.getters.pausedTodos;
   }
 
-  onTodoStatusChanged = (status: TodoStatusCode, id: number) => {
-    // pause all running tasks
-    if (status == TodoStatusCode.Started) {
-      let idx = this.todos.findIndex(f => f.status == TodoStatusCode.Started);
-      if (idx != -1) {
-        this.todos[idx].status = TodoStatusCode.Paused;
-      }
-    }
-
-    let idx = this.todos.findIndex(f => f.id == id);
-    if (idx != -1) {
-      this.todos[idx].status = status;
-    }
+  onTodoStatusChanged(todo: Todo, status: TodoStatusCode) {
+    this.changeTodoStatus({ todo, status });
   }
 }
 </script>

@@ -16,6 +16,6 @@ const todos = {
 }
 export default new Vuex.Store({
   modules: {
-    todos: todos
+    todos: {...todos}
   }
 })
