@@ -76,7 +76,7 @@
 
 <script lang='ts'>
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Todo, TodoStatusCode } from '../models/todo';
+import { Todo, TodoStatusCode } from '@/models';
 import { VChip, VTooltip } from 'vuetify/lib';
 
 @Component({

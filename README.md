@@ -14,16 +14,16 @@ Our team was already able to complete the following:
 * Add the basic app and component structure
 
 ## Mission
-- [ ] Clone this repository into your account
+- [x] Clone this repository into your account
 - [ ] Create a named `vuex` module to hold your todos
 - [ ] Complete the CRUD features in the GUI and make sure they are reflected in the store
-- [ ] Make sure the `todo-list` component dynamically displays the todos
-- [ ] Write concise commit messages
+- [x] Make sure the `todo-list` component dynamically displays the todos
+- [x] Write concise commit messages
 - [ ] Submit your git repository to hr@pangea-technology.com and describe your changes precisely
 
 ## Bonus
 - [ ] Add [Vuex-ORM](https://vuex-orm.github.io/vuex-orm/)
-- [ ] Add [TypeScript](https://typescriptlang.org)
+- [x] Add [TypeScript](https://typescriptlang.org)
 - [ ] Document with [jsDoc](https://devdocs.io/jsdoc/) comments
 
 ## Please note

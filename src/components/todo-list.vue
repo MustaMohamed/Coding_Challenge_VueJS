@@ -2,21 +2,28 @@
   <div>
     <TodoItem
       class="mb-3"
-      v-for="todo in todos.filter(isRunning)"
+      v-for="todo in started"
       :key="todo.id"
       :todo="todo"
       @onTodoStatusChanged="onTodoStatusChanged"
     />
     <TodoItem
       class="mb-3"
-      v-for="todo in todos.filter(isNotCompleted)"
+      v-for="todo in paused"
       :key="todo.id"
       :todo="todo"
       @onTodoStatusChanged="onTodoStatusChanged"
     />
     <TodoItem
       class="mb-3"
-      v-for="todo in todos.filter(isCompleted)"
+      v-for="todo in notCompleted"
+      :key="todo.id"
+      :todo="todo"
+      @onTodoStatusChanged="onTodoStatusChanged"
+    />
+    <TodoItem
+      class="mb-3"
+      v-for="todo in completed"
       :key="todo.id"
       :todo="todo"
       @onTodoStatusChanged="onTodoStatusChanged"
@@ -27,7 +34,7 @@
 <script lang='ts'>
 import TodoItem from './todo-item.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import { Todo, TodoStatusCode } from "../models/todo"
+import { Todo, TodoStatusCode } from '@/models'
 
 @Component({
   components: {
@@ -59,14 +66,20 @@ export default class TodoList extends Vue {
     }
   ];
 
-  isCompleted = (todo: Todo) => {
-    return todo.status == TodoStatusCode.Completed;
+  get completed() {
+    return this.$store.getters.completedTodos;
   }
-  isRunning = (todo: Todo) => {
-    return todo.status == TodoStatusCode.Started;
+
+  get notCompleted() {
+    return this.$store.getters.incompletedTodos;
   }
-  isNotCompleted = (todo: Todo) => {
-    return todo.status == TodoStatusCode.InCompleted || todo.status == TodoStatusCode.Paused;
+
+  get started() {
+    return this.$store.getters.startedTodos;
+  }
+
+  get paused() {
+    return this.$store.getters.pausedTodos;
   }
 
   onTodoStatusChanged = (status: TodoStatusCode, id: number) => {
