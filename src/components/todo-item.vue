@@ -46,6 +46,20 @@
             </template>
             <span>Pause Task</span>
           </v-tooltip>
+          <v-tooltip
+            top
+            v-if="this.allowEditForOtherTodoes">
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                color="#718093"
+                v-bind="attrs"
+                @click="markAsEditedTodo"
+                v-on="on">
+                edit
+              </v-icon>
+            </template>
+            <span>Edit</span>
+          </v-tooltip>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
               <v-icon
@@ -58,6 +72,7 @@
             </template>
             <span>Delete</span>
           </v-tooltip>
+
         </div>
       </div>
       <div>
@@ -105,6 +120,10 @@ export default class TodoItem extends Vue {
     return this.todo.status == TodoStatusCode.Paused;
   }
 
+  get allowEditForOtherTodoes() {
+    return this.$store.getters.selectedTodoToEdit.length == 0;
+  }
+
   get cardStatusColor(): string {
     switch (this.todo.status) {
       case TodoStatusCode.Completed:
@@ -147,6 +166,11 @@ export default class TodoItem extends Vue {
 
   markAsDeletedTodo() {
     const status = TodoStatusCode.Deleted;
+    this.$emit('onTodoStatusChanged', this.todo, status);
+  }
+
+  markAsEditedTodo() {
+    const status = TodoStatusCode.Editing;
     this.$emit('onTodoStatusChanged', this.todo, status);
   }
 }

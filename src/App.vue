@@ -7,11 +7,13 @@
     </v-toolbar>
     <v-content>
       <v-layout
+        class="todo-layout"
         align-center
         fill-height
         justify-center
       >
         <v-flex xs6>
+          <h1>Vue Todo App</h1>
           <TodoForm />
           <TodoList />
         </v-flex>
@@ -37,3 +39,14 @@ export default {
   }
 }
 </script>
+
+<style lang='less'>
+  .todo-layout {
+    margin: 1rem 0;
+
+    h1 {
+      text-align: center;
+      margin: 2rem auto;
+    }
+  }
+</style>

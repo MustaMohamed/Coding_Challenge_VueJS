@@ -36,6 +36,8 @@ import TodoItem from './todo-item.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { Todo, TodoStatusCode } from '@/models'
 import { mapActions } from 'vuex';
+import { VueConstructor } from "vue";
+import { StoreActions } from "@/store/types";
 
 @Component({
   components: {
@@ -45,7 +47,7 @@ import { mapActions } from 'vuex';
     ...mapActions(['changeTodoStatus'])
   }
 })
-export default class TodoList extends Vue {
+export default class TodoList extends (Vue as VueConstructor<Vue & StoreActions>) {
   get completed() {
     return this.$store.getters.completedTodos;
   }

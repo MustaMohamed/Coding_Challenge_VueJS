@@ -10,5 +10,6 @@ export enum TodoStatusCode {
   InCompleted = 'InCompleted',
   Started = 'Started',
   Paused = 'Paused',
+  Editing = 'Editing',
   Deleted = 'Deleted',
 }

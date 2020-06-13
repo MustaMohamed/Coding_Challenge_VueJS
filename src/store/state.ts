@@ -1,6 +1,7 @@
 import { Todo, TodoStatusCode } from "@/models";
+import { StoreState } from './types';
 
-const todos: Todo[] = [
+const todoes: Todo[] = [
   {
     id: 1,
     title: 'Title #1',
@@ -24,10 +25,7 @@ const todos: Todo[] = [
   }
 ]
 
-export interface StoreState {
-  todos: Todo[];
-}
-
 export const state: StoreState = {
-  todos
+  todoes,
+  seletedTodoToEdit: undefined
 }
