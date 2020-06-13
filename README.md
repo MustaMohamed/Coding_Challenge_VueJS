@@ -16,10 +16,10 @@ Our team was already able to complete the following:
 ## Mission
 - [x] Clone this repository into your account
 - [x] Create a named `vuex` module to hold your todos
-- [ ] Complete the CRUD features in the GUI and make sure they are reflected in the store
+- [x] Complete the CRUD features in the GUI and make sure they are reflected in the store
 - [x] Make sure the `todo-list` component dynamically displays the todos
 - [x] Write concise commit messages
-- [ ] Submit your git repository to hr@pangea-technology.com and describe your changes precisely
+- [x] Submit your git repository to hr@pangea-technology.com and describe your changes precisely
 
 ## Bonus
 - [ ] Add [Vuex-ORM](https://vuex-orm.github.io/vuex-orm/)
